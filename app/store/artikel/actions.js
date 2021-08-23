@@ -280,7 +280,7 @@ export default {
                 this.$notifier.showMessage({ content: 'Berhasil di simpan', color: 'success' });
             }
             else{
-                 this.$notifier.showMessage({ content: req.data.message, color: 'info' });
+                 this.$notifier.showMessage({ content: 'Dokumen harus di simpan secara manual', color: 'info' });
             }
         }
         catch(e){
