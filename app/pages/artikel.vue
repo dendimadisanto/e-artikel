@@ -47,7 +47,7 @@
               </div>
             </div>
             <div slot="widget-content" style="max-height: 70vh;height:70vh;overflow: auto;">
-              <list-artikel v-for="(item, index) in dataPencarianArtikel.data" :key="item.title" :title="item.title" :author="item.author" :desc="item.desc" :url="item.link_pdf" :idPencarian="dataPencarianSelected.id" :dataDokumen="dataDokumen"></list-artikel>
+              <list-artikel v-for="(item, index) in dataPencarianArtikel.data" :key="item.title" :title="item.title" :author="item.author" :desc="item.desc" :url="item.link_pdf" :idPencarian="dataPencarianSelected.id" :dataDokumen="dokumenPencarian"></list-artikel>
               <div row class="d-flex" v-if="dataPencarianArtikel.data && dataPencarianArtikel.data.length > 0">
                 <v-btn outline color="teal" @click="lainnya">
                     Lainnya
@@ -89,11 +89,13 @@
     data: () => ({
       dataPencarianSelected : {},
       start : 0,
-      flag_pencarian : null
+      flag_pencarian : null,
+      dokumenPencarian : []
     }),
     async created(){
       await this.$store.dispatch('middleware_client_auth');
       await this.$axios.setHeader('TOKEN', this.$store.state.auth.token)
+       await this.$store.dispatch('artikel/setNullData');
       await this.$store.dispatch('setLoading', true);
       const res = await this.$store.dispatch('artikel/getDataPencarian');
       await this.$store.dispatch('master/getDataKategori');
@@ -112,7 +114,8 @@
         if(this.dataKeyword.length > 0){
           this.flag_pencarian = 'scholar';
           await this.$store.dispatch('setLoading', true);
-          await this.$store.dispatch('artikel/cariArtikel', {data : this.dataKeyword, start:this.start, flag:flag});
+          const dokumenPencarian = await this.$store.dispatch('artikel/cariArtikel', {data : this.dataKeyword, start:this.start, flag:flag});
+          this.dokumenPencarian = dokumenPencarian.data.data;
           await this.$store.dispatch('setLoading', false);
         }
         else{
@@ -125,7 +128,8 @@
         if(this.dataKeyword.length > 0){
           this.flag_pencarian = 'google';
           await this.$store.dispatch('setLoading', true);
-          await this.$store.dispatch('artikel/cariArtikelGoogle', {data : this.dataKeyword, start:this.start, flag:flag});
+          const dokumenPencarian = await this.$store.dispatch('artikel/cariArtikelGoogle', {data : this.dataKeyword, start:this.start, flag:flag});
+          this.dokumenPencarian = dokumenPencarian.data.data;
           await this.$store.dispatch('setLoading', false);
         }
         else{

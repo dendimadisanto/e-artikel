@@ -1,6 +1,15 @@
 export default {
+ SET_NULL_DATA(state){
+  state.dataPencarian = [];
+  state.dataKeyword=[];
+  state.dataPencarianArtikel=[];
+  state.dataDokumen=[];
+ },
  SET_DATA_PENCARIAN_ARTIKEL(state, val){
  	state.dataPencarianArtikel = val;
+ },
+ SET_DATA_EKSTRAK(state, val){
+ 	state.dataEkstrak = val;
  },
  TAMBAH_DATA_PENCARIAN_ARTIKEL(state, val){
 

@@ -59,6 +59,7 @@
 				else{
 					await this.$store.dispatch('setLoading', true);
 					await this.$store.dispatch('artikel/simpanArtikel',{url:this.url,title:this.title,id_pencarian:this.idPencarian});
+					await this.$store.dispatch('artikel/getDataDokumen',{id_pencarian : this.idPencarian});
 					await this.$store.dispatch('setLoading', false);
 				}
 				

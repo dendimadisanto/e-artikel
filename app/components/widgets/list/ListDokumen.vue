@@ -20,7 +20,7 @@
         ref="fileInput"
         accept="application/pdf"
         @change="onFilePicked"/>
-       <v-btn color="cyan" small dark fab class="float-right" @click="addItem">
+       <v-btn color="cyan" small dark fab class="float-right" @click="addItem" v-if="!hideActions">
           <v-icon dark>add</v-icon>
         </v-btn>
     </v-toolbar>
@@ -44,7 +44,7 @@
                 <v-btn flat icon color="grey" @click="preview(props.item.file_exist, props.item.path_url)">
                   <v-icon>preview</v-icon>
                 </v-btn>
-                <v-btn flat icon color="grey" @click="hapusData(props.item.id)">
+                <v-btn flat icon color="grey" @click="hapusData(props.item.id)" v-if="!hideActions">
                   <v-icon>delete</v-icon>
                 </v-btn>
               </div>
@@ -65,6 +65,10 @@ export default {
     idPencarian : {
       type:Number,
       default:null
+    },
+    hideActions:{
+      type:Boolean,
+      default:false
     }
   },
   data () {

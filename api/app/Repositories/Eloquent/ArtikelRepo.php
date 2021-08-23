@@ -104,6 +104,9 @@ class ArtikelRepo extends GenericEloquentRepo{
 				}
 				$data[$key]['nama_kategori'] = implode(',',array_column($dataKategori, 'kategori'));
 				$data[$key]['kategori'] = $dataKategori;
+				$keyword = Keyword::where('id_pencarian','=',$value->id)->whereNull('dihapus_pada')->get()->toArray();
+				$keyword = array_column($keyword, 'keyword');
+				$data[$key]['keyword']  = implode(',',$keyword);
 			}
 			$response = new ResponseCreator(200, 'Berhasil di dapat', $data, []);
 
@@ -121,7 +124,7 @@ class ArtikelRepo extends GenericEloquentRepo{
 			$kategori = $params->kategori;
 			if(is_array($params->kategori)){
 				$kategori = array_column($params->kategori, 'id');
-				$kategori = implode($kategori, ',');
+				$kategori = implode(',',$kategori);
 			}
 			
 			if($params->id){
@@ -226,6 +229,28 @@ class ArtikelRepo extends GenericEloquentRepo{
 
 
 			$response = new ResponseCreator(200, 'Berhasil di simpan', [], []);
+
+		}
+		catch(\Exception $e){
+			$error[] = $e->getMessage();
+			$response = new ResponseCreator(500, 'Terjadi Kesalahan pada server', [], $error);
+		}
+		return $response->getResponse();
+	}
+
+	public function getEkstrak($params){
+		try{
+			
+			$pythonAdapter = new PythonAdapter();
+			$params = [
+				'dokumen'=>$params->dokumen,
+				'directory'=>env('DIREKTORI_ARTIKEL_UPLOAD'),
+				'search'=>explode(',', $params->search)
+			];
+			$data = $pythonAdapter->ekstrakText(['data'=>json_encode($params)]);
+
+
+			$response = new ResponseCreator(200, 'Berhasil di dapat', json_decode($data), []);
 
 		}
 		catch(\Exception $e){

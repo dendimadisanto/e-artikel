@@ -69,6 +69,11 @@ class ArtikelController extends Controller{
 		$res = $this->ArtikelRepo->hapusDokumen($request);
         return response()->json($res, $res['code']);
 	}
+
+	public function getEkstrak(Request $request){
+		$res = $this->ArtikelRepo->getEkstrak($request);
+        return response()->json($res, $res['code']);
+	}
 }
 
 ?>

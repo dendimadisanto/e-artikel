@@ -23,4 +23,12 @@ class PythonAdapter extends GenericAdapter
         $hasil = $this->curlAdapterGetRequest($urlRequest);
         return $hasil;
     }
+
+    public function ekstrakText($data = [])
+    {
+        $konfigurasiEndPointGlobalClass = new KonfigurasiEndPoinPython();
+        $urlRequest = $konfigurasiEndPointGlobalClass->pythonApi().'/ekstrak/';
+        $hasil = $this->curlAdapterPostRequest($urlRequest, $data);
+        return $hasil;
+    }
 }

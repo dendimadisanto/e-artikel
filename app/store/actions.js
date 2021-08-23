@@ -26,7 +26,6 @@ export default {
         if (process.client) {
             if (document.cookie) {
                 const parsed = cookieparser.parse(document.cookie)
-                console.log(parsed.authImsArtikel)
                 try {
                     auth = JSON.parse(parsed.authImsArtikel)
                 } catch (err) {
@@ -60,7 +59,6 @@ export default {
         dispatch('setAuth', null)
         Cookie.remove('authImsArtikel')
         this.$router.push('/login');
-        dispatch('setAuth', null)
         return false;
     },
     async DoLogin({

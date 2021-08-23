@@ -26,7 +26,7 @@
           :items="dataKeyword"
           hide-actions
           class="elevation-0"
-          style="height: 50vh;overflow: auto;"
+          style="height: 63vh;overflow: auto;"
         >
           <template slot="items" slot-scope="props">
             <td>{{ dataKeyword.indexOf(props.item) + 1 }}</td>

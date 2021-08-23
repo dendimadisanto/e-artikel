@@ -4,7 +4,7 @@ namespace App\Globalclass;
 class KonfigurasiEndPoinPython{
 
 	public function __construct(){
-		$this->url = 'http://localhost:8000';
+		$this->url = env('APP_URL_PYTHON');
 	}
 
 	 public function pythonApi()

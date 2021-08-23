@@ -1,9 +1,15 @@
 const Menu = [
   {
     title: 'Artikel',
-    icon: 'dashboard',
+    icon: 'article',
     name: 'Artikel',
     href: '/artikel'
+  },
+   {
+    title: 'Ekstraksi Teks (Artikel)',
+    icon: 'analytics',
+    name: 'Ekstrak',
+    href: '/ekstrak'
   },
   {
     title: 'Data Master',

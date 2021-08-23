@@ -39,6 +39,7 @@ $router->group(['middleware' => 'HakAkses'], function ($router)
 		 $router->post('/hapus-pencarian', 'ArtikelController@hapusPencarian');
 		 $router->get('/get-data-keyword', 'ArtikelController@getDataKeyword');
 		 $router->get('/get-data-dokumen', 'ArtikelController@getDataDokumen');
+		 $router->post('/get-ekstrak', 'ArtikelController@getEkstrak');
 		 $router->post('/store-keyword', 'ArtikelController@storeKeyword');
 		 $router->post('/hapus-keyword', 'ArtikelController@hapusKeyword');
 		 $router->post('/cari-artikel', 'ArtikelController@cariArtikel');

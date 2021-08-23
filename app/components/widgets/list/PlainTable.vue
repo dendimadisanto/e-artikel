@@ -14,7 +14,7 @@
     <v-toolbar card dense color="transparent">
       <v-toolbar-title><h4>Data Pencarian</h4></v-toolbar-title>
       <v-spacer></v-spacer>
-       <v-btn color="cyan" small dark fab class="float-right" @click="addItem">
+       <v-btn color="cyan" small dark fab class="float-right" @click="addItem" v-if="!hideActions">
           <v-icon dark>add</v-icon>
         </v-btn>
     </v-toolbar>
@@ -26,7 +26,7 @@
           :items="dataPencarian"
           hide-actions
           class="elevation-0"
-          style="height: 50vh;overflow: auto;"
+          style="height: 63vh;overflow: auto;"
         >
           <template slot="items" slot-scope="props">
             <tr @click="!props.item.editable ? onClickTable(props.item) : ''" :class="dataPencarian.indexOf(props.item) === dataPencarian.indexOf(dataSelected) ? 'selected-tabel' : ''">
@@ -76,7 +76,10 @@
                   </template>
                 </v-combobox>
             </td>
-            <td class="text-xs-right">
+            <td v-if="kolomKeyword">
+               {{ props.item.keyword }}
+            </td>
+            <td class="text-xs-right" v-if="!hideActions">
               <div v-if="!props.item.editable">
                 <v-btn flat icon color="grey" @click="editForm(props.item)">
                   <v-icon>edit</v-icon>
@@ -113,6 +116,16 @@
 import { Projects } from '@/api/project';
 import { mapState } from 'vuex';
 export default {
+  props:{
+      hideActions:{
+        type:Boolean,
+        default:false
+      },
+      kolomKeyword:{
+        type:Boolean,
+        default:false
+      }
+    },
   data () {
     return {
       data:[],
@@ -161,6 +174,16 @@ export default {
       dataPencarian : (state)=>state.artikel.dataPencarian,
       dataKategori : (state)=>state.master.dataKategori
     })
+  },
+  created(){
+      if(this.kolomKeyword){
+        this.headers.push({
+          text: 'Keyword',
+          align: 'left',
+          value: 'keyword',
+          sortable: false,
+        })
+      }
   },
   methods:{
     onClickTable(item){

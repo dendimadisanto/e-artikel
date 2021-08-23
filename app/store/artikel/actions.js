@@ -1,9 +1,37 @@
 export default {
+    setNullData ({
+        commit
+    }, payload) {
+        commit('SET_NULL_DATA')
+    },
     async getDataPencarian({ commit}, payload){
         try{
             const req = await this.$axios.$get('artikel/get-data-pencarian');
 
             commit('SET_DATA_PENCARIAN', req.data);
+
+            return {
+                status : true,
+                message : 'Berhasil di dapat'
+            }
+        }
+        catch(e){
+              if (e.message.toLowerCase().includes('network')) {
+               this.$notifier.showMessage({ content: 'Koneksi bermasalah, silakan cek koneksi internet.', color: 'error' });
+            } else {
+                const {
+                    errors,
+                    message
+                } = e.response.data
+                this.$notifier.showMessage({ content:  message, color: 'error' });
+            }
+        }
+    },
+    async getEkstrak({ commit}, payload){
+        try{
+            const req = await this.$axios.$post('artikel/get-ekstrak', payload);
+
+            commit('SET_DATA_EKSTRAK', req.data);
 
             return {
                 status : true,
@@ -198,7 +226,8 @@ export default {
             }
             return {
                 status : true,
-                message : 'Berhasil di dapat'
+                message : 'Berhasil di dapat',
+                data : req.data
             }
         }
         catch(e){
@@ -227,6 +256,7 @@ export default {
 
             return {
                 status : true,
+                 data : req.data,
                 message : 'Berhasil di dapat'
             }
         }
